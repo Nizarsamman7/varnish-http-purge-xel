@@ -263,7 +263,7 @@ class VarnishPurger {
 		// http://wordpress.org/support/topic/incompatability-with-editorial-calendar-plugin
 	        
 		// Samy (xelmedia): Support for multiple varnish servers:
-		$ips = preg_split('/,\s*/', $varniship);
+		$ips = array_unique(preg_split('/,\s*/', $varniship));
 		foreach($ips as $ip) {
 			$purgeme = $schema.$ip.$path.$pregex;
 			if (!empty($p['query']) && $p['query'] != 'vhp-regex') {
