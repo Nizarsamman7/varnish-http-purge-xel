@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Varnish HTTP Purge
-Plugin URI: http://wordpress.org/extend/plugins/varnish-http-purge/
+Plugin Name: Varnish HTTP Purge Xel Media
+Plugin URI: https://github.com/xelmedia/varnish-http-purge/
 Description: Sends HTTP PURGE requests to URLs of changed posts/pages when they are modified.
-Version: 3.8-beta
-Author: Mika Epstein
-Author URI: http://halfelf.org/
+Version: 3.8-xel
+Author: Mika Epstein, Samy Ascha
+Author URI: http://halfelf.org/, http://www.xel.nl
 License: http://www.apache.org/licenses/LICENSE-2.0
 Text Domain: varnish-http-purge
 Network: true
