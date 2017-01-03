@@ -264,14 +264,14 @@ class VarnishPurger {
 	        
 		// Samy (xelmedia): Support for multiple varnish servers:
 		$ips = preg_split('/,\s*/', $varniship);
-        	foreach($ips as $ip) {
-            		$purgeme = $schema.$ip.$path.$pregex;
-            		if (!empty($p['query']) && $p['query'] != 'vhp-regex') {
-                		$purgeme .= '?' . $p['query'];
-            		}
-            		$response = wp_remote_request($purgeme, array('method' => 'PURGE', 'headers' => array( 'host' => $p['host'], 'X-Purge-Method' => $varnish_x_purgemethod ) ) );
-            		do_action('after_purge_url', $url, $purgeme, $response);
-        	}
+		foreach($ips as $ip) {
+			$purgeme = $schema.$ip.$path.$pregex;
+			if (!empty($p['query']) && $p['query'] != 'vhp-regex') {
+				$purgeme .= '?' . $p['query'];
+			}
+			$response = wp_remote_request($purgeme, array('method' => 'PURGE', 'headers' => array( 'host' => $p['host'], 'X-Purge-Method' => $varnish_x_purgemethod ) ) );
+			do_action('after_purge_url', $url, $purgeme, $response);
+		}
 	}
 
 	/**
