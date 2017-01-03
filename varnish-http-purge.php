@@ -261,9 +261,17 @@ class VarnishPurger {
 
 		// Cleanup CURL functions to be wp_remote_request and thus better
 		// http://wordpress.org/support/topic/incompatability-with-editorial-calendar-plugin
-		$response = wp_remote_request($purgeme, array('method' => 'PURGE', 'headers' => array( 'host' => $p['host'], 'X-Purge-Method' => $varnish_x_purgemethod ) ) );
-
-		do_action('after_purge_url', $url, $purgeme, $response);
+	        
+		// Samy (xelmedia): Support for multiple varnish servers:
+		$ips = preg_split('/,\s*/', $varniship);
+        	foreach($ips as $ip) {
+            		$purgeme = $schema.$ip.$path.$pregex;
+            		if (!empty($p['query']) && $p['query'] != 'vhp-regex') {
+                		$purgeme .= '?' . $p['query'];
+            		}
+            		$response = wp_remote_request($purgeme, array('method' => 'PURGE', 'headers' => array( 'host' => $p['host'], 'X-Purge-Method' => $varnish_x_purgemethod ) ) );
+            		do_action('after_purge_url', $url, $purgeme, $response);
+        	}
 	}
 
 	/**
