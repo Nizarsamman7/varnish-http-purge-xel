@@ -57,6 +57,8 @@ class VarnishPurger {
 		global $blog_id;
 		load_plugin_textdomain( 'varnish-http-purge' );
 
+        $this->setNoCacheHeadersForUris();
+
 		// get my events
 		$events = $this->getRegisterEvents();
 
@@ -95,6 +97,27 @@ class VarnishPurger {
 		}
 
 	}
+
+    /**
+     * Set no-cache headers for all uris that are defined in wp-config.php using VHP_VARNISH_NO_CACHE
+     */
+	function setNoCacheHeadersForUris() {
+        if (defined('VHP_VARNISH_NO_CACHE')) {
+            $varnishNoCache = VHP_VARNISH_NO_CACHE;
+            if (is_array($varnishNoCache)) {
+                $noCacheUris = $varnishNoCache;
+            } else {
+                $noCacheUris = explode(",", $varnishNoCache);
+            }
+            foreach ($noCacheUris as $noCacheUri) {
+                $pattern = '/' . preg_quote($noCacheUri, '/') . '/';
+                $subject = $_SERVER['REQUEST_URI'];
+                if (preg_match($pattern, $subject)) {
+                    header('Cache-Control: no-cache, no-store, must-revalidate');
+                }
+            }
+        }
+    }
 
 	/**
 	 * Purge Message
