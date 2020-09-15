@@ -3,7 +3,7 @@
 Plugin Name: Varnish HTTP Purge Xel Media
 Plugin URI: https://github.com/xelmedia/varnish-http-purge/
 Description: Sends HTTP PURGE requests to URLs of changed posts/pages when they are modified.
-Version: 3.8.1-xel
+Version: 3.8.4-xel
 Author: Mika Epstein, Samy Ascha
 Author URI: http://halfelf.org/, http://www.xel.nl
 License: http://www.apache.org/licenses/LICENSE-2.0
