@@ -1,18 +1,17 @@
 <?php
 /*
-Plugin Name: Varnish HTTP Purge Xel Media
-Plugin URI: https://github.com/xelmedia/varnish-http-purge/
-Description: Sends HTTP PURGE requests to URLs of changed posts/pages when they are modified.
-Version: 3.8.4-xel
-Author: Mika Epstein, Samy Ascha
-Author URI: http://halfelf.org/, http://www.xel.nl
+Plugin Name: xel varnish purge
+Plugin URI: https://xel.nl
+Description: Maakt het mogelijk om de varnish cache bij xel te legen.
+Version: 3.8.5
+Author: xel
 License: http://www.apache.org/licenses/LICENSE-2.0
 Text Domain: varnish-http-purge
 Network: true
 
 Copyright 2013-2015: Mika A. Epstein (email: ipstenu@ipstenu.org)
 
-Original Author: Leon Weidauer ( http:/www.lnwdr.de/ )
+Original Author: Leon Weidauer ( http:/www.lnwdr.de/ ), Mika Epstein (http://halfelf.org/)
 
 	This file is part of Varnish HTTP Purge, a plugin for WordPress.
 
@@ -284,7 +283,7 @@ class VarnishPurger {
         // Cleanup CURL functions to be wp_remote_request and thus better
         // http://wordpress.org/support/topic/incompatability-with-editorial-calendar-plugin
 
-        // Samy (xelmedia): Support for multiple varnish servers:
+        // Support for multiple varnish servers:
         $ips = array_unique(preg_split('/,\s*/', $varniship));
         foreach ($ips as $ip) {
             $purgeme = $schema . $ip . $path . $pregex;
@@ -365,7 +364,10 @@ class VarnishPurger {
             // Home Page and (if used) posts page
             array_push($listofurls, home_url('/'));
             if (get_option('show_on_front') == 'page') {
-                array_push($listofurls, get_permalink(get_option('page_for_posts')));
+                // Ensure we have a page_for_posts setting to avoid empty URL.
+                if ( get_site_option( 'page_for_posts' ) ) {
+                    array_push( $listofurls, get_permalink( get_site_option( 'page_for_posts' ) ) );
+                }
             }
 
             // Now flush all the URLs we've collected
