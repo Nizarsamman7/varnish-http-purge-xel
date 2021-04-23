@@ -234,10 +234,11 @@ class VarnishPurger {
      * Parse the URL for proxy proxies
      *
      * @param array $url the url to be purged
+     * @param bool $purgeWww will purge both www and non-www urls
      * @access protected
      * @since 1.0
      */
-    public function purgeUrl($url) {
+    public function purgeUrl($url, $purgeWww = true) {
         $p = parse_url($url);
 
         if (isset($p['query']) && ($p['query'] == 'vhp-regex')) {
@@ -293,6 +294,19 @@ class VarnishPurger {
             $response = wp_remote_request($purgeme, array('method' => 'PURGE', 'headers' => array('host' => $p['host'], 'X-Purge-Method' => $varnish_x_purgemethod)));
             do_action('after_purge_url', $url, $purgeme, $response);
         }
+
+        // Make sure we purge with AND without www
+        if(!$purgeWww) return;
+        // Make sure we purge with AND without www
+        $hostnameWithoutWww = str_replace("www.", "", $p['host']);
+        $hostnameWithWww = "www.{$hostnameWithoutWww}";
+
+        if($p['host'] === $hostnameWithoutWww) {
+            $url = str_replace($hostnameWithoutWww, $hostnameWithWww, $url);
+        } else {
+            $url = str_replace($hostnameWithWww, $hostnameWithoutWww, $url);
+        }
+        $this->purgeUrl($url, false);
     }
 
     /**
