@@ -3,7 +3,7 @@
 Plugin Name: xel varnish purge
 Plugin URI: https://xel.nl
 Description: Maakt het mogelijk om de varnish cache bij xel te legen.
-Version: 3.8.5
+Version: 3.9.1
 Author: xel
 License: http://www.apache.org/licenses/LICENSE-2.0
 Text Domain: varnish-http-purge
