@@ -26,7 +26,7 @@ if (!defined('WP_CLI')) {
 class WP_CLI_Varnish_Purge_Command extends WP_CLI_Command {
 
     public function __construct() {
-        $this->varnish_purge = new VarnishPurger();
+        $this->varnish_purge = new XelVarnishPurger();
     }
 
     /**

@@ -29,7 +29,7 @@ Original Author: Leon Weidauer ( http:/www.lnwdr.de/ ), Mika Epstein (http://hal
  *
  * @since 2.0
  */
-class VarnishPurger {
+class XelVarnishPurger{
     protected $purgeUrls = array();
 
     /**
@@ -398,7 +398,7 @@ class VarnishPurger {
 
 }
 
-$purger = new VarnishPurger();
+$purger = new XelVarnishPurger();
 
 // WP-CLI
 if (defined('WP_CLI') && WP_CLI) {
